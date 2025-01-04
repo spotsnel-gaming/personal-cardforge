@@ -17,6 +17,6 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Run podman build - Forge
-        run: podman build -t ghcr.io/gbraad-gaming/cardforge:latest -f Containerfile .
+        run: podman build -t ghcr.io/spotsnel-gaming/cardforge:latest -f Containerfile .
       - name: Push image to ghcr.io - Forge
-        run: podman push --creds=${{ github.actor }}:${{ secrets.GITHUB_TOKEN }} ghcr.io/gbraad-gaming/cardforge:latest
+        run: podman push --creds=${{ github.actor }}:${{ secrets.GITHUB_TOKEN }} ghcr.io/spotsnel-gaming/cardforge:latest

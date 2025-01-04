@@ -1,0 +1,29 @@
+name: tailscale-rdesktop
+on:
+  workflow_dispatch:
+
+jobs:
+  rdesktop-test:
+    runs-on: ubuntu-24.04
+    
+    steps:
+      - name: Run system container with `podman`
+        run: |
+          podman run -d --name cardforge ghcr.io/spotsnel-gaming/cardforge:latest
+      - name: Tailscale setup (root)
+        run: |
+          until podman exec cardforge tailscale up --auth-key ${TAILSCALE_AUTHKEY}
+          do
+              sleep 0.1
+          done
+          podman exec cardforge tailscale set --ssh
+          podman exec cardforge tailscale set --hostname github-${HOSTNAME}
+        env:
+          TAILSCALE_AUTHKEY: ${{ secrets.TAILSCALE_AUTHKEY}}
+      - name: Start `kasmvncserver` as user forge
+        run: |
+          podman exec cardforge su - forge -c 'kasmvncserver'
+      - name: Hang around
+        run: |
+          podman exec cardforge tailscale ip
+          sleep infinity
