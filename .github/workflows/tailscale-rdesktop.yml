@@ -20,10 +20,9 @@ jobs:
           podman exec cardforge tailscale set --hostname github-${HOSTNAME}
         env:
           TAILSCALE_AUTHKEY: ${{ secrets.TAILSCALE_AUTHKEY}}
-      - name: Start `kasmvncserver` as user forge
-        run: |
-          podman exec cardforge su - forge -c 'kasmvncserver'
       - name: Hang around
         run: |
+          sleep 5
+          podman exec cardforge systemctl is-active kasmvncserver
           podman exec cardforge tailscale ip
           sleep infinity

@@ -17,8 +17,6 @@ $ podman run -d --name cardforge \
    --hostname ${HOSTNAME}-cardforge -p 8444:8444 \
    -v ~/.cache/forge:/home/forge/.cache/forge \
    ghcr.io/spotsnel-gaming/cardforge:latest
-$ podman exec -it cardforge su - forge
-$ kasmvncserver
 ```
 
 This allows you to open the remote session from your IP, like
@@ -31,7 +29,7 @@ This allows you to open the remote session from your IP, like
 Otherwise, you can use tailscale to allow remote use:
 
 ```shell
-$ sudo tailscale up
+$ podman exec cardforge tailscale up
 $ tailscale ip
 ```
 

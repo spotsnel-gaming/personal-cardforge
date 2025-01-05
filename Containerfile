@@ -63,6 +63,9 @@ RUN mkdir -p ~/Downloads ~/Applications/Cardforge \
 # ensure to become root for systemd
 USER root
 
-RUN systemctl enable tailscaled
+COPY kasmvncserver.service /etc/systemd/system
+
+RUN systemctl enable tailscaled \
+    && systemctl enable kasmvncserver
 
 ENTRYPOINT ["/sbin/init"]
