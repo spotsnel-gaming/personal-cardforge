@@ -22,7 +22,10 @@ jobs:
           TAILSCALE_AUTHKEY: ${{ secrets.TAILSCALE_AUTHKEY}}
       - name: Hang around
         run: |
-          sleep 5
-          podman exec cardforge systemctl is-active kasmvncserver
-          podman exec cardforge tailscale ip
+          until podman exec cardforge systemctl is-active kasmvncserver
+          do
+               sleep 1
+          done
+          IP=`podman exec cardforge tailscale ip -4`
+          echo "Open in your web browser: https://${IP}:8444"
           sleep infinity
