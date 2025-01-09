@@ -12,12 +12,12 @@ jobs:
           podman run -d --name cardforge ghcr.io/spotsnel-gaming/cardforge:latest
       - name: Tailscale setup (root)
         run: |
-          until podman exec cardforge tailscale up --auth-key ${TAILSCALE_AUTHKEY}
+          until podman exec cardforge tailscale up --auth-key ${TAILSCALE_AUTHKEY} --hostname github-${HOSTNAME}
           do
               sleep 0.1
           done
           podman exec cardforge tailscale set --ssh
-          podman exec cardforge tailscale set --hostname github-${HOSTNAME}
+          podman exec cardforge tailscale chmod 640 /etc/shadow
         env:
           TAILSCALE_AUTHKEY: ${{ secrets.TAILSCALE_AUTHKEY}}
       - name: Hang around
