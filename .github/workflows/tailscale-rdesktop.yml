@@ -10,5 +10,5 @@ jobs:
     with:
       runs-on: "ubuntu-latest"
       image: "ghcr.io/spotsnel-gaming/cardforge:latest"
-      hostname: "gaming-minecraft-client-1"
+      hostname: "gaming-cardforge"
     secrets: inherit
